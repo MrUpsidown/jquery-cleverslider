@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+
+            /* IMPORTANT: You need to set the container width and height through CSS or dynamically */
+            /* CONTAINER overflow to hidden */
+            .container {
+                background-color:yellow;
+                width:600px;
+                height:100px;
+                overflow:hidden;
+            }
+
+            /* IMPORTANT: You need to set the slider width and height through CSS or dynamically */
+            /* SLIDER position to relative */
+            .slider {
+                width:0;
+                height:100px;
+                position:relative;
+            }
+
+            /* Demo */
+            .slider-content {
+                background-color:red;
+                height:100px;
+                border-right:3px solid white;
+                float:left;
+            }
+
+            span {
+                font-family:Arial;
+                font-size:70px;
+                font-weight:bold;
+                color:white;
+                padding:0 10px;
+            }
+
+        </style>
+
+        <!-- Include jQuery library and cleverSlider plugin -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="clever-slider.js"></script>
+
+        <title>jQuery mouseover clever slider</title>
+
+        <script type="text/javascript">
+
+            // Counter for demo purposes
+            var counter=0;
+
+            $(function() {
+
+                // Add a div to the slider
+                $("#addContent").click(function() {
+
+                    // Increase counter for demo
+                    counter++;
+
+                    // Add your content to the slider
+                    $("#mySlider").append('<div class="slider-content"><span>' + counter + '</span></div>');
+
+                    // **************** IMPORTANT *****************
+                    // YOU NEED TO DECLARE THE SLIDER DIV CSS WIDTH
+                    // If you know its width in advance, you can fix it through CSS
+                    // If you add content dynamically use something like this:
+
+                    var sliderWidth = 0;
+
+                    $(".slider-content").each(function() {
+                        sliderWidth += $(this).outerWidth();
+                    });
+
+                    $("#mySlider").css("width", sliderWidth + 'px');
+
+                    // This shows how you can force the slider to show the content you just added
+                    var containerWidth = $("#myContainer").width();
+                    var x = sliderWidth - containerWidth;
+
+                    // If slider needs to slide
+                    if (x > 0) {
+
+                        // Set slider left offset in pixels
+                        $('#mySlider').css('left', '-' + x + 'px');
+                    }
+                });
+
+                // Call the cleverSlider function with your container and slider DIV IDs
+                cleverSlider('myContainer', 'mySlider');
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <button id="addContent">Add content to fill container</button><br /><br />
+
+        <div id="myContainer" class="container">
+
+            <div id="mySlider" class="slider">
+
+            </div>
+        </div>
+
+    </body>
+</html>
